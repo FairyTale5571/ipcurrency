@@ -1,10 +1,11 @@
 package app
 
 import (
+	"net/http"
+
 	"github.com/fairytale5571/ipcurrency/internal/api/delivery"
 	"github.com/fairytale5571/ipcurrency/internal/api/repository"
 	"github.com/fairytale5571/ipcurrency/internal/api/services"
-	"net/http"
 )
 
 type App struct {
@@ -12,7 +13,6 @@ type App struct {
 
 	ipInfoService     services.IPInfo
 	ipInfoRepo        repository.IPInfo
-	statusHTTPHandler delivery.StatusHTTP
 	ipInfoHTTPHandler delivery.IPInfoHTTP
 }
 

@@ -7,9 +7,6 @@ type Error struct {
 	Value       any      `json:"value,omitempty"`
 }
 
-// NewError creates a new error with the given description and message.
-// The description is the error description and the message is the error message.
-// The message slice is optional.
 func NewError(code int, description string, value any, message ...string) *Error {
 	return &Error{
 		Code:        code,

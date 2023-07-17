@@ -2,13 +2,22 @@ package main
 
 import (
 	"context"
-	"github.com/fairytale5571/ipcurrency/config"
-	"github.com/fairytale5571/ipcurrency/internal/app"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/fairytale5571/ipcurrency/config"
+	"github.com/fairytale5571/ipcurrency/internal/app"
 )
+
+// @title IPCurrency
+// @version 2.0
+// @description API for IPCurrency Service
+
+// @host localhost:3000
+// @BasePath /
+// @Schemes http
 
 func main() {
 	if err := config.ReadConfig(); err != nil {
@@ -21,7 +30,7 @@ func main() {
 	}
 
 	ctx := registerGracefulHandle()
-	_ = <-ctx.Done()
+	<-ctx.Done()
 
 }
 

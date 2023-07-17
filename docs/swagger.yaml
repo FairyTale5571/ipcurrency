@@ -1,0 +1,79 @@
+basePath: /
+definitions:
+  currencies.CurrencyRateToUAH:
+    properties:
+      currency:
+        type: string
+      rateToUAH:
+        type: number
+    type: object
+  errorops.Error:
+    properties:
+      code:
+        type: integer
+      description:
+        type: string
+      message:
+        items:
+          type: string
+        type: array
+      value: {}
+    type: object
+  ipinfo.requestBody:
+    properties:
+      ip:
+        items:
+          type: string
+        type: array
+    type: object
+  ipinfo.responseBody:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      currencies:
+        items:
+          $ref: '#/definitions/currencies.CurrencyRateToUAH'
+        type: array
+      currentTime:
+        type: string
+      ip:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: API for IPCurrency Service
+  title: IPCurrency
+  version: "2.0"
+paths:
+  /ip-info:
+    post:
+      description: return country information and currency rate to UAH
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/ipinfo.requestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ipinfo.responseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorops.Error'
+      summary: get ip info
+schemes:
+- http
+swagger: "2.0"

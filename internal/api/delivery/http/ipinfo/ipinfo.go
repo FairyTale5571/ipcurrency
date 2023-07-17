@@ -1,13 +1,13 @@
 package ipinfo
 
 import (
-	"github.com/fairytale5571/ipcurrency/pkg/timeops"
 	"net/http"
 	"time"
 
 	"github.com/fairytale5571/ipcurrency/internal/api/services"
 	"github.com/fairytale5571/ipcurrency/pkg/currencies"
 	"github.com/fairytale5571/ipcurrency/pkg/errorops"
+	"github.com/fairytale5571/ipcurrency/pkg/timeops"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
 )
@@ -31,6 +31,15 @@ type Handler struct {
 	tmFn          func() time.Time
 }
 
+// GetIPInfo
+// @Summary get ip info
+// @Schemes
+// @Description return country information and currency rate to UAH
+// @Produce  	json
+// @Param request body 			requestBody 		true "query params"
+// @Success 	200 			{object} 			responseBody
+// @Failure 	400 			{object} 			errorops.Error
+// @Router /ip-info [post]
 func (h Handler) GetIPInfo() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		var request requestBody
@@ -72,21 +81,30 @@ func (h Handler) getIPInfoInternal(request requestBody) ([]responseBody, *erroro
 				return err
 			}
 
+			loc, e := time.LoadLocation(ipInfo.Timezone)
+			if e != nil {
+				return errorops.NewError(
+					http.StatusInternalServerError,
+					"failed to load location",
+					ipInfo.Timezone,
+					e.Error(),
+				)
+			}
+
 			response[i] = responseBody{
 				IP:          ip,
 				Country:     ipInfo.Country,
 				City:        ipInfo.City,
 				Latitude:    ipInfo.Lat,
 				Longitude:   ipInfo.Lon,
-				CurrentTime: h.tmFn().Format(timeops.DD_MM_YYYY_HH_MM),
+				CurrentTime: h.tmFn().In(loc).Format(timeops.DD_MM_YYYY_HH_MM),
 				Currencies:  rate,
 			}
 			return nil
 		})
 	}
-	var err error
-	err = errGroup.Wait()
-	if err != nil {
+
+	if err := errGroup.Wait(); err != nil {
 		return []responseBody{}, errorops.NewError(
 			http.StatusInternalServerError,
 			"failed to get IP info",

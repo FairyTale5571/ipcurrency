@@ -3,9 +3,10 @@ package currencies
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 	"io"
 	"net/http"
+
+	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 )
 
 type CurrenciesResponse struct {

@@ -7,8 +7,6 @@ import (
 	"github.com/fairytale5571/ipcurrency/pkg/ipinfo"
 )
 
-//go:generate mockgen -source repository.go -destination ./repository_mock.go -package repository
-
 type (
 	IPInfo interface {
 		GetIPInfo(ip string) (ipinfo.IPInformation, *errorops.Error)

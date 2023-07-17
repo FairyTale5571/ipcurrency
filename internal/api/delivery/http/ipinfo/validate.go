@@ -1,9 +1,10 @@
 package ipinfo
 
 import (
-	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 	"net"
 	"net/http"
+
+	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 )
 
 func (r requestBody) validate() *errorops.Error {

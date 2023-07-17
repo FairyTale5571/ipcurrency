@@ -1,12 +1,12 @@
 package countries
 
 import (
-	"github.com/stretchr/testify/require"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/fairytale5571/ipcurrency/pkg/errorops"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_currencies_GetCountryCurrency(t *testing.T) {

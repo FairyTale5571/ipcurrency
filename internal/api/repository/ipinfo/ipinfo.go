@@ -1,13 +1,13 @@
 package ipinfo
 
 import (
-	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 	"net/http"
 	"time"
 
 	"github.com/fairytale5571/ipcurrency/internal/api/repository"
 	"github.com/fairytale5571/ipcurrency/pkg/countries"
 	"github.com/fairytale5571/ipcurrency/pkg/currencies"
+	"github.com/fairytale5571/ipcurrency/pkg/errorops"
 	"github.com/fairytale5571/ipcurrency/pkg/ipinfo"
 	"github.com/spf13/viper"
 )
@@ -48,7 +48,7 @@ func (r Repository) GetCurrencyRate(countryCode string) ([]currencies.CurrencyRa
 	}
 
 	var rates []currencies.CurrencyRateToUAH
-	for k, _ := range tickers {
+	for k := range tickers {
 		rate, err := r.currenciesProvider.GetExchangeUAHRates(k)
 		if err != nil {
 			return nil, err
