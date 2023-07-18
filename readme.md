@@ -2,6 +2,10 @@
 
 ## Description:
 
+## Flow:
+
+![plot](./diagram.png)
+
 Test task for Privat24 Golang Developer position.
 
 ## Tests:
